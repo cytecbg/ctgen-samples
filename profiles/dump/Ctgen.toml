@@ -1,0 +1,23 @@
+[profile]
+name = "dump"
+env-file = ".env"
+env-var = "DB_CONNECTION"
+dsn = ""
+target-dir = "output/dump"
+templates-dir = "assets/templates"
+scripts-dir = "assets/scripts"
+prompts = [ "dump" ]
+targets = [ "dump" ]
+
+[prompt.dump]
+prompt = "Would you like to render the dump target?"
+multiple = false
+ordered = false
+required = false
+options = { 1 = "Yes", 0 = "No" }
+
+[target.dump]
+condition = "{{prompts/dump}}"
+template = "dump"
+target = "dump.json"
+formatter = "jq . {{target}} > pretty-dump.json && mv pretty-dump.json {{target}}"
