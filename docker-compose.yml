@@ -1,0 +1,34 @@
+services:
+
+  database:
+    image: mariadb
+    command:
+      [
+        "mariadbd",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+      ]
+    ports:
+      - 3306:3306
+    environment:
+      MARIADB_DATABASE: example
+      MARIADB_USER: user
+      MARIADB_PASSWORD: pass
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+    volumes:
+      - .docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - database-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8888:80
+    links:
+      - database
+    environment:
+      PMA_HOST: database
+      PMA_USER: root
+      UPLOAD_LIMIT: 1G
+
+volumes:
+  database-data:
