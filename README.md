@@ -36,7 +36,8 @@ or by manually adding the ones you're interested in using `ctgen config add [pat
 ```shell 
 docker-compose up -d
 ```
-The example docker setup launches a MariaDB<sup>[*2](#notes)</sup> instance running on port `3306` (might conflict with locally running instances) and phpMyAdmin at port `8888` for convenience.
+The example docker setup launches a MariaDB<sup>[*2](#notes)</sup> instance running on port `3306` (might conflict with locally running instances) and phpMyAdmin on port `8888` for convenience<sup>[*3](#notes)</sup>.
+
 4. Since the `.env` file for the sample profiles is in the same directory, you can run each profile you want to test from here.
 - Run the `dump` example:
 ```shell
@@ -83,3 +84,5 @@ ctgen init [profile name to create]
 ```bash
 docker volume rm ctgen-samples_database-data
 ```
+
+3. To explore the database open [localhost:8888](http://localhost:8888)
