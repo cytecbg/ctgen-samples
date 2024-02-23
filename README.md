@@ -30,7 +30,7 @@ for d in profiles/* ; do ctgen config add "$d"; done
 ```
 or by manually adding the ones you're interested in using `ctgen config add [path-to-profile]`.
 
-2. Verify that the profiles are properly registered run `ctgen config ls`
+2. Verify that the profiles are properly registered by running `ctgen config ls`
 
 3. Start an example MariaDB database server using docker, run:
 ```shell 
