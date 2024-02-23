@@ -32,7 +32,7 @@ or by manually adding the ones you're interested in using `ctgen config add [pat
 
 2. Verify that the profiles are properly registered by running `ctgen config ls`
 
-3. Start an example MariaDB database server using docker, run:
+3. Start an example MariaDB database server using docker by running:
 ```shell 
 docker-compose up -d
 ```
