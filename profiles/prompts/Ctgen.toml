@@ -1,5 +1,5 @@
 [profile]
-name = "docs"
+name = "sample-prompts"
 env-file = ".env"
 env-var = "DB_CONNECTION"
 dsn = ""
