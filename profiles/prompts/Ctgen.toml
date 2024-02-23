@@ -1,0 +1,53 @@
+[profile]
+name = "docs"
+env-file = ".env"
+env-var = "DB_CONNECTION"
+dsn = ""
+target-dir = "output/prompts"
+templates-dir = "assets/templates"
+scripts-dir = "assets/scripts"
+prompts = [ "dummy", "columns", "created", "richtext", "submodules", "fk-select" ]
+targets = [ "dummy" ]
+
+[prompt.dummy]
+prompt = "Do you like pizza?"
+options = { 1 = "Yes", 0 = "No" }
+required = false
+
+[prompt.columns]
+prompt = "Select grid columns:"
+options = "{{concat table/columns}}"
+multiple = true
+ordered = true
+required = true
+
+[prompt.created]
+condition = "{{#each table/columns}}{{#if (eq name \"created\")}}1{{/if}}{{/each}}"
+prompt = "Display created field?"
+options = { 1 = "Yes", 0 = "No" }
+required = false
+
+[prompt.richtext]
+condition = "{{#if (has_text table)}}1{{/if}}"
+prompt = "Choose columns to attach editor.js to:"
+options = "{{#concat table/columns render_all=true}}{{#if datatype.text}}{{name}}{{/if}}{{/concat}}"
+multiple = true
+ordered = false
+
+[prompt.submodules]
+condition = "{{#if (gt (len constraints_foreign) 0)}}1{{/if}}"
+prompt = "Select submodules to add?"
+options = "{{#concat constraints_foreign render_all=true}}{{key_pairs.[0].local.table}}{{/concat}}"
+multiple = true
+required = false
+
+[prompt.fk-select]
+condition = "{{#if constraints_local}}1{{/if}}"
+prompt = "Choose foreign key columns to manage as select control:"
+options = "{{#concat constraints_local render_all=true}}{{key_pairs.[0].local.name}}{{/concat}}"
+multiple = true
+ordered = false
+
+[target.dummy]
+template = "dummy"
+target = "prompts_{{table/name}}.md"

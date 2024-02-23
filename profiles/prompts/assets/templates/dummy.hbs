@@ -1,0 +1,29 @@
+# Prompts for {{table_name}} of database {{database/name}}
+
+Answer to prompt `dummy`: {{#if (eq @root/prompts/dummy "1")}}YES{{else}}NO{{/if}}
+
+Selected columns in prompt `columns`: {{#concat @root/prompts/columns separator=", " render_all=true}}`{{this}}`{{/concat}}
+
+{{#if prompts/created}}
+The table {{@root/table_name}} has column `created` and we shall {{#unless (eq prompts/created "1")}}NOT{{/unless}} display it.
+{{else}}
+No `created` column found for prompt "created".
+{{/if}}
+
+{{#if prompts/richtext}}
+Rich text columns: {{#concat @root/prompts/richtext separator=", " render_all=true}}`{{this}}`{{/concat}}
+{{/if}}
+
+{{#if prompts/submodules}}
+Submodules: {{#concat @root/prompts/submodules separator=", " render_all=true}}`{{this}}`{{/concat}}
+{{/if}}
+
+{{#if prompts/fk-select}}
+FK Select: {{#concat @root/prompts/fk-select separator=", " render_all=true}}`{{this}}`{{/concat}}
+{{/if}}
+
+# Raw Data
+
+```
+{{{json @root/prompts}}}
+```
