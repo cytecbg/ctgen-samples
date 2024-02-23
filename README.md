@@ -10,7 +10,7 @@ More information about `ctgen` can be found [here](https://github.com/cytecbg/ct
 
 Currently available samples and their purpose:
 
-- `docs`: Creates a database-level Markdown document describing the database structure.
+- `docs`: Creates a Markdown document describing the database structure.
 - `dump`: Creates a dump of the `ctgen` task context. Useful for debugging and exploration.
 - `prompts`: Demonstrates commonly used prompts and their properties and effects.
 - More to come...
