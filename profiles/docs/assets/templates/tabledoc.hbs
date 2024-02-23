@@ -1,0 +1,133 @@
+# Table `{{table/name}}` of database `{{database/name}}`
+
+Table `{{table/name}}` has {{len table/columns}} columns and a primary key `{{concat table/primary_key separator=", "}}`.
+
+## Columns:
+
+| Column | SQL Type | JSON Type | Rust Type |
+| :--- | :---: | :---: | :---: |
+{{#each table/columns}}
+| `{{this/name}}` | `{{datatype_sql this/datatype}}` | `{{datatype_json this.datatype_json}}` | `{{{this.datatype_rust.[0]}}}` |
+{{/each}}
+
+## Foreign keys
+
+### Local
+
+{{#if (gt (len constraints_local) 0)}}
+| Name | Local Column | Foreign Column |
+| :--- | :--- | :--- |
+{{#each constraints_local}}
+| `{{name}}` | `{{key_pairs.[0].local.table}}`.`{{key_pairs.[0].local.name}}` | `{{key_pairs.[0].foreign.table}}`.`{{key_pairs.[0].foreign.name}}` |
+{{/each}}
+{{/if}}
+
+### Foreign
+
+{{#if (gt (len constraints_foreign) 0)}}
+| Name | Local Column | Foreign Column |
+| :--- | :--- | :--- |
+{{#each constraints_foreign}}
+| `{{name}}` | `{{key_pairs.[0].local.table}}`.`{{key_pairs.[0].local.name}}` | `{{key_pairs.[0].foreign.table}}`.`{{key_pairs.[0].foreign.name}}` |
+{{/each}}
+{{/if}}
+
+## Indexes
+
+{{#if (gt (len table/indexes) 0)}}
+| Name | Local Column | Primary | Unique |
+| :--- | :--- | :---: | :---: |
+{{#each table/indexes}}
+| `{{name}}` | `{{column/name}}` | {{#if primary}}YES{{else}}NO{{/if}} | {{#if unique}}YES{{else}}NO{{/if}} |
+{{/each}}
+{{/if}}
+
+# Inflector Test
+
+{{inflect table/name to_camel_case=true}}
+{{inflect table/name to_pascal_case=true}}
+{{inflect table/name to_snake_case=true}}
+{{inflect table/name to_screaming_snake_case=true}}
+{{inflect table/name to_kebab_case=true}}
+{{inflect table/name to_sentence_case=true}}
+{{inflect table/name to_title_case=true}}
+{{inflect table/name to_foreign_key=true}}
+{{inflect table/name to_class_case=true}}
+{{inflect table/name to_table_case=true}}
+{{inflect table/name to_plural=true}}
+{{inflect table/name to_singular=true}}
+{{inflect table/name to_upper_case=true}}
+{{inflect table/name to_lower_case=true}}
+
+# Concat Test
+
+{{concat table/columns separator=", "}}
+
+# Frequently Used Snippets
+
+## Script `contains`
+
+Checking if a string, array or object contains a certain string,
+for example if a column with a specific name is present:
+
+{{#if (contains table/columns "created")}}
+    This table has a `created` column.
+{{else}}
+    This table doesn't have a `created` column.
+{{/if}}
+
+## Script `first_varchar_column_name`
+
+Getting the first text-ish field to use as a label:
+{{first_varchar_column_name table}}
+
+## Script `fk_table_name`
+
+Getting the name of a related table by the foreign key column name:
+
+{{fk_table_name constraints_local "country_id"}}
+
+Substitute "country_id" with a column that you've selected in a prompt (`@root/prompts/special_column`).
+
+## Script `has_text`
+
+Check if there's a text column in a table:
+
+{{#each database/tables}}
+`{{this/name}}`: **{{#if (has_text this)}}YES{{else}}NO{{/if}}**
+{{~#unless @last}};  {{/unless}}
+{{/each}}
+
+## Script `is_fk`
+
+Check if a column is a foreign key
+
+{{#if (is_fk constraints_local "country_id")}}
+YES
+{{else}}
+NO
+{{/if}}
+
+## Others
+
+Title: {{inflect table_name to_title_case=true to_singular=true}}
+
+Human readable entities name: {{inflect table_name to_title_case=true to_lower_case=true}}
+
+Human readable entity name: {{inflect table_name to_title_case=true to_singular=true to_lower_case=true}}
+
+Model name: {{inflect table_name to_pascal_case=true}}
+
+ID Column: {{table/primary_key.[0]}}
+
+ID Column into human readable label: {{inflect (strip_id table/primary_key.[0]) to_sentence_case=true}}
+
+Struct name: {{inflect table_name to_class_case=true}}
+
+Strip sensitive columns:
+{{#each table/columns}}
+    {{#if (or (contains name "password") (contains name "token"))}}
+        hide_column("{{name}}");
+    {{/if}}
+{{/each}}
+

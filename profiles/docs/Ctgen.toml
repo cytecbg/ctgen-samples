@@ -1,0 +1,30 @@
+[profile]
+name = "docs"
+env-file = ".env"
+env-var = "DB_CONNECTION"
+dsn = ""
+target-dir = "output/docs"
+templates-dir = "assets/templates"
+scripts-dir = "assets/scripts"
+prompts = [ "dbdoc", "tabledoc" ]
+targets = [ "dbdoc", "tabledoc" ]
+
+[prompt.dbdoc]
+prompt = "Would you like to build a db doc markdown file for database {{database/name}}?"
+options = { 1 = "Yes", 0 = "No" }
+required = true
+
+[prompt.tabledoc]
+prompt = "Would you like to build a table doc markdown file for table {{table_name}}?"
+options = { 1 = "Yes", 0 = "No" }
+required = true
+
+[target.dbdoc]
+condition = "{{prompts/dbdoc}}"
+template = "dbdoc"
+target = "db_{{database/name}}.md"
+
+[target.tabledoc]
+condition = "{{prompts/tabledoc}}"
+template = "tabledoc"
+target = "table_{{table/name}}.md"
