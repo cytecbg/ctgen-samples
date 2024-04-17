@@ -1,0 +1,28 @@
+
+# Rhai Packages Test
+
+Simple demonstration of the additional rhai packages available.
+
+{{#if (version_parser ctgen_ver)}}
+## Rhai Chrono
+
+Rhai timestamp: {{rhai_chrono timestamp}}
+
+## Rhai Sci
+
+Regression: {{concat (rhai_sci) separator=", "}}
+
+## Rhai Fs
+
+Profile contents:
+
+```toml
+{{{rhai_fs "profiles/rhai/Ctgen.toml"}}}
+```
+
+## Rhai URL
+
+URL Domain: {{rhai_url "https://github.com/rhaiscript/rhai"}}
+{{else}}
+Unsupported `ctgen` version. Please update.
+{{/if}}

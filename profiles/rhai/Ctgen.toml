@@ -1,0 +1,19 @@
+[profile]
+name = "rhai"
+env-file = ".env"
+env-var = "DB_CONNECTION"
+dsn = ""
+target-dir = "output/rhai"
+templates-dir = "assets/templates"
+scripts-dir = "assets/scripts"
+prompts = []
+targets = ["rhai"]
+
+[prompt.rhai]
+prompt = "Would you like to build a db doc markdown file for database {{database/name}}?"
+options = { 1 = "Yes", 0 = "No" }
+required = true
+
+[target.rhai]
+template = "rhai"
+target = "rhai.md"

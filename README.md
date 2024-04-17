@@ -13,6 +13,7 @@ Currently available samples and their purpose:
 - `docs`: Creates a Markdown document describing the database structure.
 - `dump`: Creates a dump of the `ctgen` task context. Useful for debugging and exploration.
 - `prompts`: Demonstrates commonly used prompts and their properties and effects.
+- `rhai`: Demonstrates newly added rhai packages, like `chrono`, `fs`, `url` and `sci`.
 - More to come...
 
 ## Usage
@@ -56,6 +57,12 @@ After answering all prompts you should get a file `output/docs/db_example.md` an
 ctgen run --profile prompts
 ```
 After answering all prompts you should get a file `output/prompts/prompts_<table name>.md` depending on the table you selected as a target table.
+
+- Run the `rhai` example:
+```shell
+ctgen run --profile rhai books
+```
+No prompts are defined for this template. You should get a file `output/rhai/rhai.md`. The table you select does not matter.
 
 - etc.
 
